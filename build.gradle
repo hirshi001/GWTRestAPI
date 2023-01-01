@@ -15,9 +15,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
-    implementation "com.github.hirshi001:RestApi:$restAPIVersion"
-    implementation "com.github.hirshi001:RestApi:$restAPIVersion:sources"
-    implementation group: 'org.gwtproject', name: 'gwt-user', version: '2.10.0'
+    api "com.github.hirshi001:RestApi:$restAPIVersion"
+    api "com.github.hirshi001:RestApi:$restAPIVersion:sources"
+    implementation "org.gwtproject:gwt-user:$gwtUserVersion"
+    implementation "org.gwtproject:gwt-user:$gwtUserVersion:sources"
 }
 
 
