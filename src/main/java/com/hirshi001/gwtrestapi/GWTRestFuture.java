@@ -197,7 +197,7 @@ public class GWTRestFuture<T, U> implements RestFuture <T, U>{
     @Override
     public U get() throws InterruptedException {
         while (!isDone()) {
-            Thread.yield();
+            // do nothing
         }
         return result;
     }
@@ -207,7 +207,7 @@ public class GWTRestFuture<T, U> implements RestFuture <T, U>{
         long start = System.currentTimeMillis();
         long millisTimeout = unit.toMillis(timeout);
         while (!isDone()) {
-            Thread.yield();
+            // do nothing
             if (System.currentTimeMillis() - start > millisTimeout) {
                 throw new TimeoutException();
             }
