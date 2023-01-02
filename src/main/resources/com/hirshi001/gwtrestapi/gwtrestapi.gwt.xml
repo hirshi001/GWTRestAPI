@@ -3,7 +3,6 @@
         "http://www.gwtproject.org/doctype/2.8.0/gwt-module.dtd">
 <module>
     <inherits name="com.hirshi001.restapi.restapi" />
-    <inherits name="com.google.gwt.core.client" />
-    <inherits name="com.google.gwt.user.client" />
+    <inherits name="com.google.gwt" />
     <source path=""/>
 </module>
