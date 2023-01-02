@@ -16,18 +16,13 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
     api "com.github.hirshi001:RestApi:$restAPIVersion"
-    api "com.github.hirshi001:RestApi:$restAPIVersion:sources"
     implementation "org.gwtproject:gwt-user:$gwtUserVersion"
-    implementation "org.gwtproject:gwt-user:$gwtUserVersion:sources"
 }
 
 
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'com.hirshi001'
-            artifactId = 'library'
-            version = '1.0-SNAPSHOT'
             from components.java
         }
     }
