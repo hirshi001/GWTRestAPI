@@ -16,7 +16,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
     api "com.github.hirshi001:RestApi:$restAPIVersion"
-    implementation "org.gwtproject:gwt-user:$gwtUserVersion"
+    implementation 'org.gwtproject:gwt-user:2.10.0'
 }
 
 
