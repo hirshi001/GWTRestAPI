@@ -25,6 +25,9 @@ dependencies {
 publishing {
     publications {
         maven(MavenPublication) {
+            groupId = 'com.hirshi001'
+            artifactId = 'library'
+            version = '1.0-SNAPSHOT'
             from components.java
         }
     }
