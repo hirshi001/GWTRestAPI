@@ -11,38 +11,7 @@ import java.util.concurrent.*;
 
 public class GWTRestFutureFactory implements RestFutureFactory {
 
-    private static final ScheduledExec DEFAULT_EXECUTOR = new ScheduledExec() {
-        private final Scheduler scheduler = Scheduler.get();
-        @Override
-        public void run(Runnable runnable, long delay) {
-            Timer timer = new Timer() {
-                @Override
-                public void run() {
-                    runnable.run();
-                }
-            };
-            timer.schedule((int)delay);
-        }
-
-        @Override
-        public void run(Runnable runnable, long delay, TimeUnit period) {
-            Timer timer = new Timer() {
-                @Override
-                public void run() {
-                    runnable.run();
-                }
-            };
-            int delayMillis = (int) TimeUnit.MILLISECONDS.convert(delay, period);
-            timer.schedule(delayMillis);
-        }
-
-        @Override
-        public void runDeferred(Runnable runnable) {
-            scheduler.scheduleDeferred(runnable::run);
-        }
-    };
-
-
+    private static final ScheduledExec DEFAULT_EXECUTOR = new GWTScheduledExecutor();
     @Override
     public <T> RestFuture<T, T> create() {
         return create(DEFAULT_EXECUTOR, true, (RestFutureConsumer<T, T>) null);
@@ -88,5 +57,10 @@ public class GWTRestFutureFactory implements RestFutureFactory {
                 future.setCause(e);
             }
         }, null);
+    }
+
+    @Override
+    public ScheduledExec getDefaultExecutor() {
+        return DEFAULT_EXECUTOR;
     }
 }

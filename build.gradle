@@ -12,7 +12,7 @@ repositories {
 }
 
 ext {
-    restAPIVersion="5cb0ab6457"
+    restAPIVersion="67b7b188cf"
     gwtUserVersion="2.10.0"
 }
 
