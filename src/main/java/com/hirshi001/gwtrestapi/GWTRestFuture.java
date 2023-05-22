@@ -1,3 +1,19 @@
+/*
+ * Copyright 2023 Hrishikesh Ingle
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.hirshi001.gwtrestapi;
 
 import com.hirshi001.restapi.RestFuture;
@@ -11,6 +27,14 @@ import java.util.concurrent.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * A GWT compatible implementation of {@link RestFuture}
+ * @param <T> The type of the input
+ * @param <U> The type of the output
+ *
+ * @author Hrishikesh Ingle
+ */
+@SuppressWarnings({"FieldMayBeFinal", "unchecked"})
 public class GWTRestFuture<T, U> implements RestFuture <T, U>{
 
     private ScheduledExec executor;
@@ -212,18 +236,18 @@ public class GWTRestFuture<T, U> implements RestFuture <T, U>{
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
     public RestFuture<T, U> addListener(ScheduledExec executor, RestFutureListener listener) {
         if (executor == null) throw new NullPointerException("executor cannot be null");
         if (listener == null) throw new NullPointerException("listener cannot be null");
-        listenerExecutors.add(new ListenerExecutor<>(executor, listener));
+        listenerExecutors.add( new ListenerExecutor<>(executor, listener));
         return this;
     }
 
     @Override
     public boolean removeListener(RestFutureListener listener) {
-        boolean success = false;
-        if (listeners.removeIf(l -> l == listener))
-            success = true; //we need to remove possible duplicate listeners from both lists
+        boolean success = listeners.removeIf(l -> l == listener);
+        //we need to remove possible duplicate listeners from both lists
         if (listenerExecutors.removeIf(l -> l.listener == listener)) success = true;
         return success;
     }
