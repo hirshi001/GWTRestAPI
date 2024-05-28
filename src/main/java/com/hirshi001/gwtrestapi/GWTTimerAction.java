@@ -26,18 +26,46 @@ import com.hirshi001.restapi.TimerAction;
  */
 public class GWTTimerAction extends TimerAction {
     private final Timer timer, inner;
+    private boolean cancelled;
+    long initialDelay;
+    long delay;
+    long initialTime;
 
     public GWTTimerAction(Timer timer, Timer inner, long initialDelay, long delay, Runnable runnable) {
-        super(initialDelay, delay, runnable);
+        super(initialDelay, delay, runnable, inner != null);
         this.timer = timer;
         this.inner = inner;
+        this.initialDelay = initialDelay;
+        this.delay = delay;
+        this.initialTime = System.currentTimeMillis();
+
     }
 
     @Override
     public void cancel() {
-        super.cancel();
         timer.cancel();
         inner.cancel();
+        cancelled = true;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    @Override
+    public boolean isDone() {
+        if(inner == null) {
+            return !timer.isRunning();
+        }
+        return !timer.isRunning() && !inner.isRunning();
+    }
+
+    @Override
+    public long getRemainingDelay() {
+        long elapsed = System.currentTimeMillis() - initialTime;
+        return initialDelay - elapsed;
+
     }
 
 }

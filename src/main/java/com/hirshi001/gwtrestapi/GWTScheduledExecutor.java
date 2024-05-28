@@ -32,7 +32,7 @@ public class GWTScheduledExecutor implements ScheduledExec {
 
     private final Scheduler scheduler = Scheduler.get();
     @Override
-    public void run(Runnable runnable, long delay) {
+    public TimerAction run(Runnable runnable, long delay) {
         Timer timer = new Timer() {
             @Override
             public void run() {
@@ -40,18 +40,12 @@ public class GWTScheduledExecutor implements ScheduledExec {
             }
         };
         timer.schedule((int)delay);
+        return new GWTTimerAction(timer, null, delay, 0, runnable);
     }
 
     @Override
-    public void run(Runnable runnable, long delay, TimeUnit period) {
-        Timer timer = new Timer() {
-            @Override
-            public void run() {
-                runnable.run();
-            }
-        };
-        int delayMillis = (int) TimeUnit.MILLISECONDS.convert(delay, period);
-        timer.schedule(delayMillis);
+    public TimerAction run(Runnable runnable, long delay, TimeUnit period) {
+        return run(runnable, period.toMillis(delay));
     }
 
     @Override
@@ -61,7 +55,6 @@ public class GWTScheduledExecutor implements ScheduledExec {
 
     @Override
     public TimerAction repeat(Runnable runnable, long initialDelay, long delay, TimeUnit period) {
-
         final Timer inner = new Timer() {
             @Override
             public void run() {
